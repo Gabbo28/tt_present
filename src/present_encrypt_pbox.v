@@ -19,7 +19,6 @@
 //======================================================================
 
 `default_nettype none
-`timescale 1ns/1ns
 
 module present_encrypt_pbox(
    output wire [63:0] odat,

@@ -75,7 +75,7 @@ async def test_project(dut):
     # ----------------------------
     # Wait until data_top_valid is high
     # ----------------------------
-    while dut.uio_out[2].value == 0:
+    while dut.uio_out.value[2] == 0:
         await RisingEdge(dut.clk)
 
     # ----------------------------
