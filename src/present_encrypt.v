@@ -20,10 +20,6 @@
 //
 //======================================================================
 `default_nettype none
-`timescale 1ns/1ns
-
-//`define DEBUG
-`define PRINT_TEST_VECTORS
 
 module present_encrypt (
         input wire [63:0]   idat,    // data input port
@@ -93,34 +89,5 @@ always @(posedge clk) begin
    end
 end
 
-
-////-------------------Debug stuff -------------------
-//
-//// To print key1 and key32
-//`ifdef PRINT_KEY_VECTORS
-//always @(posedge clk)
-//begin
-//   if (round==0)
-//      $display("KEYVECTOR=> key1=%x  key32=%x",key,kreg);
-//end
-//`endif
-//
-//// To print test vectors at simulation time
-//`ifdef PRINT_TEST_VECTORS
-//always @(posedge clk)
-//begin
-//   if (round==0)
-//      $display("TESTVECTOR=> ", $time, " plaintext=%x  key=%x  ciphertext=%x",idat,key,odat);
-//end
-//`endif
-//
-//// To inspect internal signals at simulation
-//`ifdef DEBUG
-//always @(posedge clk)
-//begin
-//      $display("D=> ", $time, " %d  %x  %x  %x  %x  %x  %x",round,idat,dreg,dat1,dat2,dat3,odat);
-//      $display("K=> ", $time, " %d  %x  %x  %x",round,kreg,kdat1,kdat2);
-//end
-//`endif
 
 endmodule
