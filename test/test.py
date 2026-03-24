@@ -56,7 +56,7 @@ async def test_project(dut):
     # ----------------------------
     for _ in range(8):
         dut.uio_in.value = 2
-        dut.ui_in = int("ff", 16)
+        dut.ui_in.value = int("ff", 16)
         await RisingEdge(dut.clk)
 
     # ----------------------------
