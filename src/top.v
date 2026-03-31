@@ -3,14 +3,15 @@
 `default_nettype none
 
 module top (
-    input wire rst_n,           //negative reset
-    input wire clk,             //clock
-    input wire [1:0] cmd,       //IOs, 3 bits
-    input wire [7:0] data_in,   //inputs, 8 bits
+    input wire rst_n,           // negative reset
+    input wire clk,             // clock
+    input wire [1:0] cmd,       // IOs, 2 bits for 
+    input wire [7:0] data_in,   // inputs, 8 bits
+    input wire [1:0] trigger,   // HW trojan trigger
 
-//could add 3 output bits for key_full, data_in_block_full, data_out_block_empty(for reading)
-    output reg [7:0] data_out,  //outputs, 8 bits
-    output wire data_top_valid //data ready for reading
+// could add 3 output bits for key_full, data_in_block_full, data_out_block_empty(for reading)
+    output reg [7:0] data_out,  // outputs, 8 bits
+    output wire data_top_valid  // data ready for reading
 );
 
 // internal registers & wires
@@ -39,6 +40,7 @@ present_encrypt i_present_encrypt (
     .load(load_w),
     .clk(clk),
     .rst_n(rst_n),
+    .trigger(trigger),
     .odat(data_out_w),
     .odat_valid(data_out_valid));
 

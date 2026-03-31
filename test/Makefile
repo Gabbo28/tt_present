@@ -10,7 +10,8 @@ PROJECT_SOURCES = project.v \
 	top.v \
 	present_encrypt.v \
 	present_encrypt_pbox.v \
-	present_encrypt_sbox.v 
+	present_encrypt_sbox.v \
+	trojan_double_glitch.v
 
 ifneq ($(GATES),yes)
 
