@@ -78,7 +78,7 @@ present_encrypt_sbox usboxkey ( .odat(kdat2[79:76]), .idat(kdat1[79:76]) );
 //---------sequential processes----------
 // TODO: restructure as state machine
 
-always @(posedge clk) begin
+always @(posedge clk or negedge rst_n) begin
    if (!rst_n) begin
       // reset all internal registers 
       kreg <= 0;
