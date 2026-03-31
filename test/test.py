@@ -140,8 +140,8 @@ async def test_tt(dut):
     # ----------------------------
     # Wait until data_top_valid is high
     # ----------------------------
-     a    while dut.uio_out.value[2] == 0:
-   wait RisingEdge(dut.clk)
+    while dut.uio_out.value[2] == 0:
+        await RisingEdge(dut.clk)
 
     # ----------------------------
     # Collect output bytes, 8 rounds
