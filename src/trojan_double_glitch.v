@@ -2,17 +2,21 @@
 
 module double_glitch (
     input   wire    [4:0]   round,
-    input   wire    [1:0]   trigger,
+    input   wire    [2:0]   trigger,
     input   wire    [63:0]  data_in,
 
     output  wire    [63:0]  data_out
 );
 
-reg [63:0] mask_1 = 64'hf000_f000_f000_f000; // Mask=1000
-reg [63:0] mask_2 = 64'h0f00_0f00_0f00_0f00; // Mask=0100
-//reg [63:0] mask_3 = 64'h00f0_00f0_00f0_00f0; // Mask=0010
-//reg [63:0] mask_4 = 64'h000f_000f_000f_000f; // Mask=0001
+wire [63:0] mask [0:4];
 
-assign data_out = (round == 30 && trigger[1]) ? ((trigger[0]) ? (data_in^mask_2) : (data_in^mask_1) ) : data_in;
+assign mask[0] = 64'h0000_0000_0000_0000; // Mask=0000 (no fault)
+assign mask[1] = 64'hf000_f000_f000_f000; // Mask=1000
+assign mask[2] = 64'h0f00_0f00_0f00_0f00; // Mask=0100
+assign mask[3] = 64'h00f0_00f0_00f0_00f0; // Mask=0010
+assign mask[4] = 64'h000f_000f_000f_000f; // Mask=0001
+
+assign data_out = (round == 30) ? data_in^mask[trigger] : data_in;
+
 
 endmodule

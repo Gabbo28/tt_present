@@ -27,7 +27,7 @@ module present_encrypt (
         input wire [63:0]   idat,    // data input port
         input wire [79:0]   key,     // key input port
         input wire          load,    // data load command
-        input wire [1:0]    trigger, // HW-trojan trigger
+        input wire [2:0]    trigger, // HW-trojan trigger
         output wire [63:0]  odat,     // data output port; should be register???
         output wire         odat_valid
     );

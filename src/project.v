@@ -17,20 +17,18 @@ module tt_um_present (
 );
 
 // All output pins must be assigned. If not used, assign to 0.
-assign uio_oe  = 8'b0011_1100; // Inputs: bits [1:0] for commands, [7:6] for trigger; others are outputs
-assign uio_out[5:3] = 3'b000; // assigning unused IOs defined as output to zero; uio_out[2] used for data_top_valid
+assign uio_oe  = 8'b1111_1100; // Inputs: bits [1:0] for commands(, [7:6] for trigger); others are outputs
+assign uio_out[7:3] = 5'b000; // assigning unused IOs defined as output to zero; uio_out[2] used for data_top_valid
 assign uio_out[1:0] = 2'b00;
-assign uio_out[7:6] = 2'b00;
 
 // List all unused inputs to prevent warnings
-wire _unused = &{ena, uio_in[5:2], 1'b0};
+wire _unused = &{ena, uio_in[7:2], 1'b0};
 
 top tt_top (
   .rst_n(rst_n),
   .clk(clk),
   .cmd(uio_in[1:0]),
   .data_in(ui_in),
-  .trigger(uio_in[7:6]),
 
   .data_out(uo_out),
   .data_top_valid(uio_out[2])
