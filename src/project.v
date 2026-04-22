@@ -17,8 +17,8 @@ module tt_um_present (
 );
 
 // All output pins must be assigned. If not used, assign to 0.
-assign uio_oe  = 8'b1111_1100; // Inputs: bits [1:0] for commands(, [7:6] for trigger); others are outputs
-assign uio_out[7:3] = 5'b000; // assigning unused IOs defined as output to zero; uio_out[2] used for data_top_valid
+assign uio_oe  = 8'b1111_1100; // Inputs: bits [1:0] for commands; others are outputs
+assign uio_out[7:3] = 5'b0000_0; // assigning unused IOs defined as output to zero; uio_out[2] used for data_top_valid
 assign uio_out[1:0] = 2'b00;
 
 // List all unused inputs to prevent warnings

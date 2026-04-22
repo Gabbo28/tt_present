@@ -10,7 +10,7 @@ module top (
 
 // could add 3 output bits for key_full, r_data_in_full, r_data_out_empty(for reading)
     output reg [7:0] data_out,  // outputs, 8 bits
-    output wire data_top_valid  // data ready for reading
+    output reg data_top_valid  // data ready for reading
 );
 
 // internal registers & wires
@@ -18,15 +18,12 @@ reg [79:0] r_key;         //key register
 reg [63:0] r_data_in;  // data_in register
 reg [63:0] r_data_in_bak;  // backup of data_in register
 reg [63:0] r_data_out;  // data_out register
-reg [2:0] state; // state for state machine
-reg [7:0] reading; // reading state register
 reg r_load;
 reg [2:0] trigger;
+reg data_out_valid;
 
-wire data_out_valid;
 wire [63:0] w_data_out;  // data_out wire
 
-assign data_top_valid = state[2];
 
 // instanciate present_encrypt module
 present_encrypt i_present_encrypt (
@@ -42,24 +39,25 @@ present_encrypt i_present_encrypt (
 // state enum
 localparam KEY_IN = 1,
     DATA_IN = 2,
-    LOAD = 3,
-    READ_BYTE = 4;
+    LOAD = 3;
+
 
 // CODE
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        state <= 0;
         r_key <= 0;
         r_data_in <= 0;
         r_data_in_bak <= 0;
         r_data_out <= 0;
-        reading <= 0;
+        data_out <= 0;
+        data_top_valid <= 0;
         r_load <= 0;
         trigger <= 0;
     end else begin
-        reading <= {reading[6:0], 1'b0};
-        state <= {reading[7], cmd};
-        case(state)
+        data_out <= r_data_out[63:56];
+        r_data_out <= {r_data_out[55:0], 8'b0};
+        data_top_valid <= data_out_valid;
+        case(cmd)
             //IDLE: nop
             KEY_IN: begin
                 r_load <= 0;
@@ -78,17 +76,11 @@ always @(posedge clk or negedge rst_n) begin
                     r_data_in_bak <= r_data_in;
                 end
             end 
-            READ_BYTE: begin //read byte from r_data_out
-                r_load <= 0;
-                data_out <= r_data_out[63:56];
-                r_data_out <= {r_data_out[55:0], 8'b0};
-            end
             default: begin
                 r_load <= 0; //IDLE STATE, same as "0"
             end
         endcase
         if (data_out_valid) begin
-            reading <= 8'b1111_1111;
             r_data_out <= w_data_out;      
         end
     end
