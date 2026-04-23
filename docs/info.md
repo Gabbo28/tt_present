@@ -9,7 +9,7 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## PRESENT-80 Cipher with Hardware-Trojan
 
-This project is an implementation of the PRESENT symmetric cipher using a 80-bits encryption key, with a proof-of-concept hardware trojan (as explained [here](https://dr.ntu.edu.sg/server/api/core/bitstreams/d1b476e7-0a8d-4f7d-8717-58f1348b5224/content)).
+This project is an implementation of the PRESENT symmetric cipher using a 80-bits encryption key, with a proof-of-concept hardware trojan (as explained [here](https://arxiv.org/pdf/1702.08208)).
 The trojan allows for inserting distinct glitches on selected nibbles of the output of the S-box at the 30th round, which in turn allow an attacker to recover or brute-force the last round-key.
 
 ## How it works
@@ -26,7 +26,7 @@ When the "data_out_valid" signal (pin `uio_out[2]`) goes high, the ciphertext ca
 
 ### Triggering the Hardware-Trojan 
 
-The theory behind the "fault injection" attck is explained [here](https://dr.ntu.edu.sg/server/api/core/bitstreams/d1b476e7-0a8d-4f7d-8717-58f1348b5224/content), and it is recommended to be familiar with the paper in order to understand the attack.
+The theory behind the "fault injection" attck is explained in the paper [Multiple Fault Attack on PRESENT with a Hardware Trojan Implementation in FPGA](https://arxiv.org/pdf/1702.08208), and it is recommended to be familiar with its content in order to understand the attack.
 The hardware-trojan gets triggered when the same non-all-zeros plaintext is loaded for encryption.
 The trojan is triggered even if the key changes, but in this case the faulty results will contribute in bruteforcing the key(s).
 
@@ -46,7 +46,7 @@ The mask indicates how the fault propagates to the input bits of each of the S-b
 <figure>
     <img src="mask_1000_propagation.png"
          alt="Fault propagation for mask 1000">
-    <figcaption>Fault propagation for mask 1000, https://dr.ntu.edu.sg/server/api/core/bitstreams/d1b476e7-0a8d-4f7d-8717-58f1348b5224/content.</figcaption>
+    <figcaption>Fault propagation for mask 1000, https://arxiv.org/pdf/1702.08208.</figcaption>
 </figure>
 
 **TBC**...
@@ -56,3 +56,7 @@ The mask indicates how the fault propagates to the input bits of each of the S-b
 Functional tests for the chiper (taken from [here](https://opencores.org/websvn/filedetails?repname=present&path=%2Fpresent%2Ftrunk%2FDecode%2Fbench%2Fvhdl%2FPresentFullDecoderTB.vhd)), as well as 5 rounds of encryption with fixed key and plaintext testing the faults according to the masks above, can be run via the provided Makefile, with `make -B`.
 
 
+## Resources
+
+- [Multiple Fault Attack on PRESENT with a Hardware Trojan Implementation in FPGA](https://arxiv.org/pdf/1702.08208)
+- [OpenCores PRESENT implementation](https://opencores.org/websvn/filedetails?repname=present&path=%2Fpresent%2Ftrunk%2FDecode%2Fbench%2Fvhdl%2FPresentFullDecoderTB.vhd)
