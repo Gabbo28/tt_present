@@ -27,6 +27,14 @@ module tb ();
   wire VGND = 1'b0;
 `endif
 
+  initial begin
+      clk = 0;
+      rst_n = 1;
+      ena = 1;
+      uio_in[7:0] = 0;
+      ui_in[7:0] = 0;
+  end
+
   // Replace tt_um_example with your module name:
   tt_um_present user_project (
 

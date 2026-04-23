@@ -69,7 +69,7 @@ always @(posedge clk or negedge rst_n) begin
             end
             LOAD: begin
                 r_load <= 1;
-                if (r_data_in == r_data_in_bak) begin
+                if ((r_data_in == r_data_in_bak) && (r_data_in_bak != 0)) begin
                     // set trigger, 0 means no fault
                     trigger <= ( trigger == 3'd4 ) ? 3'd0 : trigger + 1;
                 end else begin
