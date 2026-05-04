@@ -49,8 +49,6 @@ The mask indicates how the fault propagates to the input bits of each of the S-b
     <figcaption>Fault propagation for mask 1000, https://arxiv.org/pdf/1702.08208.</figcaption>
 </figure>
 
-**TBC**...
-
 ## How to test
 
 Functional tests for the chiper (taken from [here](https://opencores.org/websvn/filedetails?repname=present&path=%2Fpresent%2Ftrunk%2FDecode%2Fbench%2Fvhdl%2FPresentFullDecoderTB.vhd)), as well as 5 rounds of encryption with fixed key and plaintext testing the faults according to the masks above, can be run via the provided Makefile, with `make -B`.
